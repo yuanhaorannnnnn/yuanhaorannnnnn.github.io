@@ -13,7 +13,7 @@
 
 
 
-<title>Hello World | Xianning</title>
+<title>TensorRT文档学习 | Xianning</title>
 
 
 
@@ -193,7 +193,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Hello World</h1>
+            <h1 class="post-title">TensorRT文档学习</h1>
             
                 <div class="post-meta">
                     
@@ -202,14 +202,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">March 28, 2022&nbsp;&nbsp;13:51:14</a>
+                        Date: <a href="#">March 28, 2022&nbsp;&nbsp;14:54:44</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/test/">test</a>
+                                <a href="/categories/%E6%8A%80%E6%9C%AF/">技术</a>
                             
                         </span>
                     
@@ -218,19 +218,35 @@
         </header>
 
         <div class="post-content">
-            <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+            <h3 id="Tensorrt的能力"><a href="#Tensorrt的能力" class="headerlink" title="Tensorrt的能力"></a>Tensorrt的能力</h3><blockquote>
+<p>TensorRT operates in two phases. In the first phase, usually performed offline, you provide TensorRT with a model definition, and TensorRT optimizes it for a target GPU. In the second phase, you use the optimized model to run inference.  </p>
+</blockquote>
+<p>tensorrt主要有两个阶段，离线进行模型的编译，第二阶段推理</p>
+<blockquote>
+<p>NVIDIA DLA (Deep Learning Accelerator) is a fixed-function accelerator engine targeted for deep learning operations. DLA is designed to do full hardware acceleration of convolutional neural networks. DLA supports various layers such as convolution, deconvolution, fullyconnected, activation, pooling, batch normalization, etc. DLA does not support Explicit Quantization.  </p>
+</blockquote>
+<p>DLA其实就是nv家的NPU</p>
+<h3 id="内存"><a href="#内存" class="headerlink" title="内存"></a>内存</h3><p>tensorrt主要用的是device memory（GPU），资源有限，所以要小心使用</p>
+<h4 id="Build阶段"><a href="#Build阶段" class="headerlink" title="Build阶段"></a>Build阶段</h4><h4 id="Runtime阶段"><a href="#Runtime阶段" class="headerlink" title="Runtime阶段"></a>Runtime阶段</h4><p>分为persist和scratch内存</p>
+<h3 id="Timing-Cache"><a href="#Timing-Cache" class="headerlink" title="Timing Cache"></a>Timing Cache</h3><blockquote>
+<p>To reduce the builder time, TensorRT creates a layer timing cache to keep the layer profiling information during the builder phase. The information it contains is specific to the targeted builder devices, CUDA and TensorRT versions, and BuilderConfig parameters that can change the layer implementation such as BuilderFlag::kTF32 or BuilderFlag::kREFIT. If there are other layers with the same input&#x2F;output tensor configuration and layer parameters, the TensorRT builder skips profiling and reuses the cached result for the repeated layers. If a timing query misses in the cache, the builder times the layer and updates the cache.  </p>
+</blockquote>
+<p>目的是减少build时间，先保存层的profile信息，如果有相同输入输出和参数的，就跳过profile直接用之前的结果</p>
+<h3 id="量化"><a href="#量化" class="headerlink" title="量化"></a>量化</h3><h4 id="量化工作流"><a href="#量化工作流" class="headerlink" title="量化工作流"></a>量化工作流</h4><blockquote>
+<p>Post-training quantization (PTQ) derives scale factors after the network has been trained. TensorRT provides a workflow for PTQ, called calibration, where it measures the distribution of activations within each activation tensor as the network executes on representative input data, then uses that distribution to estimate a scale value for the tensor. </p>
+<p>Quantization-aware training (QAT) computes scale factors during training. This allows the training process to compensate for the effects of the quantization and dequantization operations.<br>TensorRT’s Quantization Toolkit is a PyTorch library that helps produce QAT models that can be optimized by TensorRT. You can also utilize the toolkit’s PTQ recipe to perform PTQ in PyTorch and export to ONNX.  </p>
+</blockquote>
+<h3 id="测试性能"><a href="#测试性能" class="headerlink" title="测试性能"></a>测试性能</h3><p>两个指标</p>
+<h4 id="Latency"><a href="#Latency" class="headerlink" title="Latency"></a>Latency</h4><blockquote>
+<p>A performance measurement for network inference is how much time elapses from an input being presented to the network until an output is available. This is the latency of the network for a single inference. Lower latencies are better. In some applications, low latency is a critical safety requirement. In other applications, latency is directly visible to users as a quality of service issue. For bulk processing, latency may not be important at all.  </p>
+</blockquote>
+<h4 id="Throughput"><a href="#Throughput" class="headerlink" title="Throughput"></a>Throughput</h4><blockquote>
+<p>Another performance measurement is how many inferences can be completed in a fixed unit of time. This is the throughput of the network. Higher throughput is better. Higher throughputs indicate a more efficient utilization of fixed compute resources. For bulk processing, the total time taken will be determined by the throughput of the network.  </p>
+</blockquote>
+<p>有一种视角看待这两个指标：设置最大latency然后测量throughput。介于用户体验和系统效率的妥协</p>
+<p>选择时间测量的起点和终点很重要。一般有很多选择，对于一个典型的应用分为：pre，infer，post阶段。但是pre和post和特定应用类型有很大的关系，所以我们可以选择关注infer阶段。C++11精确测量时间的代码片段如下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;chrono&gt;</span></span></span><br><span class="line"><span class="keyword">auto</span> startTime = std::chrono::high_resolution_clock::<span class="built_in">now</span>();</span><br><span class="line">context-&gt;<span class="built_in">enqueueV2</span>(&amp;buffers[<span class="number">0</span>], stream, <span class="literal">nullptr</span>);</span><br><span class="line"><span class="built_in">cudaStreamSynchronize</span>(stream);</span><br><span class="line"><span class="keyword">auto</span> endTime = std::chrono::high_resolution_clock::<span class="built_in">now</span>();</span><br><span class="line"><span class="type">float</span> totalTime = std::chrono::<span class="built_in">duration</span>&lt;<span class="type">float</span>, std::milli&gt;</span><br><span class="line">(endTime - startTime).<span class="built_in">count</span>();</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
         </div>
 
@@ -245,7 +261,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="https://yuanhaorannnnnn.github.io/2022/03/28/hello-world/">https://yuanhaorannnnnn.github.io/2022/03/28/hello-world/</a></span>
+                        <span><a href="https://yuanhaorannnnnn.github.io/2022/03/28/nv_dev/">https://yuanhaorannnnnn.github.io/2022/03/28/nv_dev/</a></span>
                     </p>
                 
                 
@@ -264,7 +280,11 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/fun/"># fun</a>
+                        <a href="/tags/AI/"># AI</a>
+                    
+                        <a href="/tags/SoC/"># SoC</a>
+                    
+                        <a href="/tags/HPC/"># HPC</a>
                     
                         
                 </span>
@@ -277,8 +297,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2022/03/28/nv_dev/">TensorRT文档学习</a>
             
+            <a class="next" rel="next" href="/2022/03/28/hello-world/">Hello World</a>
             
         </section>
 
