@@ -9,3 +9,5 @@
 .intro h1,.hero h2,.issue h3{font-family:CollectionSerif,"Noto Serif CJK SC","Songti SC","SimSun",serif}.intro h1{font-size:clamp(38px,5vw,68px);letter-spacing:.06em}.intro{grid-template-columns:1.25fr 2fr}@media(max-width:700px){.intro{grid-template-columns:1fr}}
 
 .missing-cover{aspect-ratio:3/2;display:grid;place-content:center;color:#b1bcb2;background:#242a26;text-align:center;line-height:1.8;font-size:13px}
+
+.favorite{display:grid;place-items:center;width:44px;height:44px;padding:10px;border:0;color:#c5d1c4;background:transparent;cursor:pointer}.favorite svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.favorite[aria-pressed=true]{background:transparent;color:#c6d9bd}.favorite[aria-pressed=true] svg{fill:currentColor}.favorite:focus-visible{outline:2px solid #d1e1cb;outline-offset:2px}

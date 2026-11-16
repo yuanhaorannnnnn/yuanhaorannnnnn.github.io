@@ -8,14 +8,14 @@ const photoKey = (issue, i) => `${issue.id}:${i}`;
 const titleHtml = s => esc(s).replace(/\b([A-Za-z]+-\d+[A-Za-z]*)\b/g, '<span style="white-space:nowrap">$1</span>');
 function photo(issue, image, i) {
   const id = photoKey(issue, i), selected = favorites.includes(id);
-  return `<figure class="photo"><a href="${esc(image.path)}" target="_blank" rel="noopener"><img src="${esc(image.path)}" loading="lazy" alt="第 ${issue.id} 期第 ${i + 1} 张图片，点开查看原尺寸"></a><figcaption class="caption"><span class="caption-number">${String(i + 1).padStart(2, '0')} / ${String(issue.images.length).padStart(2, '0')}</span><span>${esc(image.caption)}</span><button class="favorite" data-id="${esc(id)}" aria-pressed="${selected}">${selected ? '已收藏' : '收藏'}</button></figcaption></figure>`;
+  return `<figure class="photo"><a href="${esc(image.path)}" target="_blank" rel="noopener"><img src="${esc(image.path)}" loading="lazy" alt="第 ${issue.id} 期第 ${i + 1} 张图片，点开查看原尺寸"></a><figcaption class="caption"><span class="caption-number">${String(i + 1).padStart(2, '0')} / ${String(issue.images.length).padStart(2, '0')}</span><span>${esc(image.caption)}</span><button class="favorite" data-id="${esc(id)}" aria-pressed="${selected}" aria-label="${selected ? '取消收藏这张图片' : '收藏这张图片'}" title="${selected ? '取消收藏' : '收藏'}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.8a5.5 5.5 0 0 0-7.8 0L12 5.9l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.4a5.5 5.5 0 0 0 0-7.8Z"/></svg></button></figcaption></figure>`;
 }
 function render() {
   document.querySelector('#count').textContent = favorites.length ? `(${favorites.length})` : '';
   const route = location.hash.slice(1) || '/';
   if (route === '/favorites') {
     const selected = issues.flatMap(issue => issue.images.map((image, i) => ({issue, image, i})).filter(x => favorites.includes(photoKey(x.issue, x.i))));
-    app.innerHTML = `<a class="back" href="#/">← 返回所有期数</a><h1 class="issue-title">我的收藏</h1><p class="subtle">收藏仅保存在当前浏览器，清除浏览器数据后可能丢失。</p>${selected.length ? `<div class="photo-grid">${selected.map(x => photo(x.issue,x.image,x.i)).join('')}</div>` : '<p class="empty">还没有收藏的图片。打开一期，点击图片旁的「收藏」。</p>'}`;
+    app.innerHTML = `<a class="back" href="#/">← 返回所有期数</a><h1 class="issue-title">我的收藏</h1><p class="subtle">收藏仅保存在当前浏览器，清除浏览器数据后可能丢失。</p>${selected.length ? `<div class="photo-grid">${selected.map(x => photo(x.issue,x.image,x.i)).join('')}</div>` : '<p class="empty">还没有收藏的图片。打开一期，点击图片旁的心形图标。</p>'}`;
   } else if (route.startsWith('/issue/')) {
     const issue = issues.find(x => String(x.id) === route.split('/')[2]);
     if (!issue) { app.innerHTML = '<p>未找到这一期。<a href="#/">返回期数列表</a></p>'; return; }
@@ -28,9 +28,9 @@ function render() {
 }
 app.addEventListener('click', event => {
   const button = event.target.closest('button[data-id]'); if (!button) return;
-  const id = button.dataset.id; favorites = favorites.includes(id) ? favorites.filter(x => x !== id) : [...favorites,id];
-  try { localStorage.setItem(key, JSON.stringify(favorites)); } catch (_) { alert('浏览器无法保存收藏，请检查存储权限。'); }
-  button.setAttribute('aria-pressed', String(favorites.includes(id))); button.textContent = favorites.includes(id) ? '已收藏' : '收藏';
+  const id = button.dataset.id; const next = favorites.includes(id) ? favorites.filter(x => x !== id) : [...favorites,id];
+  try { localStorage.setItem(key, JSON.stringify(next)); favorites = next; } catch (_) { alert('浏览器无法保存收藏，请检查存储权限。'); return; }
+  const selected = favorites.includes(id); button.setAttribute('aria-pressed', String(selected)); button.setAttribute('aria-label', selected ? '取消收藏这张图片' : '收藏这张图片'); button.title = selected ? '取消收藏' : '收藏';
   document.querySelector('#count').textContent = favorites.length ? `(${favorites.length})` : '';
   if (location.hash === '#/favorites' && !favorites.includes(id)) render();
 });
