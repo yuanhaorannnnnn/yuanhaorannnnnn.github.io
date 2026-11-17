@@ -2,6 +2,7 @@
 """Render the author's quick notes into the site; never modify source notes."""
 import argparse
 import html
+import hashlib
 import json
 import re
 from pathlib import Path
@@ -27,6 +28,7 @@ def run(source=SOURCE, site=SITE):
     original = archive.read_text(encoding='utf-8')
     if (START in original) != (END in original) or original.count(START) > 1 or original.count(END) > 1:
         raise RuntimeError('Archive markers invalid')
+    titles = json.loads((site / "notes/titles.json").read_text(encoding="utf-8"))
     pages = []
     for p in files:
         content = p.read_text(encoding='utf-8')
@@ -35,8 +37,11 @@ def run(source=SOURCE, site=SITE):
             raise RuntimeError(f'Empty note not published yet: {p.name}')
         if not lines[0].startswith('# ') or not lines[0][2:].strip():
             raise RuntimeError(f'Note has no title: {p.name}')
-        title = lines[0][2:].strip()
-        body = markdown.markdown('\n'.join(lines[1:]), extensions=['fenced_code', 'tables'])
+        entry = titles.get(p.stem, {})
+        if entry.get('sha256') != hashlib.sha256(p.read_bytes()).hexdigest() or not entry.get('title', '').strip():
+            raise RuntimeError(f'Missing or stale website title: {p.name}')
+        title = entry['title'].strip()
+        body = '<p>' + html.escape(lines[0][2:]) + '</p>' + markdown.markdown('\n'.join(lines[1:]), extensions=['fenced_code', 'tables'])
         body = bleach.clean(body, tags=['p','br','h2','h3','h4','ul','ol','li','a','strong','em','blockquote','code','pre','hr','table','thead','tbody','tr','th','td'], attributes={'a':['href','title']}, protocols=['http','https','mailto'], strip=True)
         pages.append((p.stem, title, body))
     rows = []
