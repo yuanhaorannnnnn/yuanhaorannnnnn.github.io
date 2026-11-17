@@ -1,0 +1,77 @@
+:root{color-scheme:light;--ink:#222;--muted:#53565a;--rule:#ced0d3;--serif:"Noto Serif CJK SC","Songti SC",serif}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);background:white;font:16px/1.7 Arial,"PingFang SC",sans-serif}
+header{display:flex;justify-content:space-between;gap:14px;padding:24px 40px;font-size:15px}
+header nav{display:flex;gap:24px}
+header a{text-decoration:none}
+a{color:inherit;text-underline-offset:.24em}
+a:hover{text-decoration-thickness:2px}
+a:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+main{width:min(1130px,calc(100% - 80px));margin:32px auto 72px}
+h1,h2{font-family:var(--serif);margin:0;font-weight:600;line-height:1.18}
+h1{font-size:clamp(58px,10vw,130px);letter-spacing:-.07em}
+.mast{border-block:1px solid var(--ink);padding:27px 0 22px;display:flex;gap:18px;align-items:end;justify-content:space-between}
+.mast p{margin:0 0 5px}
+.meta,.credit,figcaption,.catalogue-note{font-size:14px;color:var(--muted)}
+.credit{margin:10px 0 26px}
+.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(260px,1fr);gap:50px;align-items:start}
+.catalogue h2{font-size:26px;margin-bottom:15px}
+.catalogue ol{margin:0;padding:0;list-style:none;border-bottom:1px solid var(--rule)}
+.catalogue li{display:grid;grid-template-columns:5.5ch minmax(0,1fr);align-items:baseline;gap:15px;padding:14px 0;border-top:1px solid var(--rule)}
+.catalogue a{font-weight:600}
+.number{font:14px/1.4 ui-monospace,monospace;color:var(--muted)}
+figure{margin:0}
+img{display:block;width:100%;height:auto}
+figcaption{padding-top:8px}
+.profile{border-top:1px solid var(--ink);padding-top:12px}
+.profile h2{font-size:clamp(26px,4vw,44px);margin:23px 0 5px}
+article{padding-top:10px}
+article h1{font-size:clamp(38px,6vw,78px);letter-spacing:-.035em;margin:10px 0}
+.article-head{border-block:1px solid var(--rule);margin-top:18px;padding:24px 0 5px}
+.article-head p{margin:.5em 0}
+.reading{max-width:650px;margin:26px auto;font-size:17px;line-height:1.85}
+.reader-photo{max-width:760px;margin:30px auto}
+footer{border-top:1px solid var(--rule);padding-top:15px}
+[hidden]{display:none!important}
+@media(max-width:680px){
+ header{padding:22px;font-size:14px}header nav{gap:12px}
+ main{width:calc(100% - 44px);margin-top:10px}
+ .mast{display:block}.mast p{margin-top:8px}
+ .layout{gap:26px;grid-template-columns:1fr}.profile{width:min(100%,415px)}
+ .reading{font-size:16px}
+}
+
+/* The catalogue keeps the edition number in a separate, ruled column. */
+.columns{display:grid;grid-template-columns:5.5ch minmax(0,1fr);gap:15px;color:var(--muted);font-size:13px;padding:0 0 5px}
+.catalogue li{grid-template-columns:4rem minmax(0,1fr);gap:0;padding:0}
+.columns{grid-template-columns:4rem minmax(0,1fr);gap:0}
+.columns span+span,.catalogue li>:nth-child(2){padding-left:15px}
+.catalogue li>:first-child{align-self:stretch;border-right:1px solid var(--rule);padding-top:16px}
+.catalogue li>:nth-child(2){padding-block:13px}
+.profile{border:1px solid #aeb1b4;padding:14px;background:#f4f5f5}
+.file-label{display:grid;grid-template-columns:minmax(0,1fr) 42px;border:1px solid #aeb1b4;background:#fff;margin-bottom:16px}
+.file-name{padding:12px 15px 20px;min-height:106px}
+.profile .file-name h2{margin:13px 0 0;font-size:clamp(25px,3vw,39px)}
+.file-number{display:grid;place-items:center;border-left:1px solid #aeb1b4;font:600 16px ui-monospace,monospace}
+.profile-link{display:inline-block;margin-top:10px}
+.reader-id{display:inline-flex;border:1px solid var(--rule);font:14px/1.4 Arial,"PingFang SC",sans-serif}
+.reader-id span{padding:5px 10px}
+.reader-id span+span{border-left:1px solid var(--rule)}
+@media(max-width:680px){.columns,.catalogue li{grid-template-columns:3rem minmax(0,1fr)}.columns span+span,.catalogue li>:nth-child(2){padding-left:10px}}
+
+.filter{display:block;margin:0 0 10px;font-size:14px;color:var(--muted)}
+.filter input{max-width:100%;padding:5px 8px;border:1px solid var(--rule);font:inherit}
+#search-status{font-size:14px;margin:0 0 10px}
+#search-status:empty{margin:0}
+.reading{overflow-wrap:anywhere}
+.reading h2,.reading h3,.reading h4{margin:1.6em 0 .65em}
+.reading figure{margin:1.5em 0}
+.reading img{max-width:100%}
+button{font:inherit;color:inherit;background:white;border:1px solid var(--rule);padding:.3em .65em;cursor:pointer}
+button[aria-pressed=true]{font-weight:bold}
+.next{border-top:1px solid var(--rule);padding-top:15px;display:flex;justify-content:space-between;gap:12px}
+.next a:last-child{margin-left:auto}
+@media(max-width:680px){
+ header{flex-wrap:wrap}
+ .profile{grid-row:1}
+}
