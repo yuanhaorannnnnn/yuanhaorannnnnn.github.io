@@ -1,0 +1,41 @@
+
+:root{color-scheme:light;--ink:#222;--muted:#555;--rule:#d3d4d4;--serif:"Noto Serif CJK SC","Songti SC",serif}
+*{box-sizing:border-box}
+body{margin:0;background:#fff;color:var(--ink);font:16px/1.7 Arial,"PingFang SC",sans-serif}
+a{color:inherit;text-underline-offset:.24em}
+a:hover{text-decoration-thickness:2px}
+header{display:flex;justify-content:space-between;gap:18px;align-items:center;padding:24px 40px;font-size:15px}
+header a{text-decoration:none}
+main{width:min(1160px,calc(100% - 80px));margin:38px auto 70px}
+.mast{border-block:1px solid var(--ink);padding:34px 0 28px;display:flex;align-items:end;justify-content:space-between;gap:18px}
+.mast h1,h2,article h1{font-family:var(--serif);font-weight:600;line-height:1.24;margin:0}
+.mast h1{font-size:clamp(56px,8vw,110px);letter-spacing:-.06em}
+.meta,.credit,.attribution{color:var(--muted);font-size:14px}
+.mast p{margin:0 0 6px}
+.feature{display:grid;grid-template-columns:1.65fr 1fr;gap:32px;padding:25px 0;border-bottom:1px solid var(--rule);align-items:end}
+img{display:block;width:100%;height:auto}
+.feature h2{font-size:clamp(27px,3.8vw,53px);margin:8px 0 20px}
+figure{margin:0}
+figcaption{font-size:13px;color:var(--muted);margin-top:8px}
+.catalog{max-width:760px;margin:35px 0}
+.catalog h2{margin:0 0 15px}
+.catalog ol{padding:0;list-style:none;margin:0}
+.catalog li{display:grid;grid-template-columns:6ch 1fr;gap:15px;border-top:1px solid var(--rule);padding:12px 0}
+.period{font-variant-numeric:tabular-nums;color:var(--muted)}
+.credit{border-top:1px solid var(--rule);padding-top:16px;margin-top:26px}
+article h1{font-size:clamp(34px,5vw,72px);margin:9px 0 12px}
+article .reading{max-width:680px;margin:26px auto;font-size:18px;line-height:1.9}
+article figure{max-width:920px;margin:22px auto}
+.article-head{border-bottom:1px solid var(--rule);padding:24px 0 18px}
+.article-head p{margin:.35em 0}
+.next{display:flex;justify-content:space-between;border-top:1px solid var(--rule);padding-top:16px;gap:18px}
+@media(max-width:640px){header{padding:23px 22px;font-size:14px}main{width:calc(100% - 44px);margin-top:16px}.mast{display:block;padding:22px 0}.mast p{margin-top:9px}.feature{grid-template-columns:1fr;gap:15px}.feature h2{margin-bottom:10px}article .reading{font-size:16px}}
+
+header nav { display:flex; gap:18px }
+.reading img { max-width:100%; height:auto }
+.reading figure { margin:1.5em 0 }
+button { font:inherit; color:inherit; background:#fff; border:1px solid var(--rule); padding:.3em .65em; cursor:pointer }
+button[aria-pressed=true] { font-weight:bold }
+.filter { display:block; margin-top:1.2em }
+.filter input { font:inherit; max-width:100%; border:1px solid var(--rule); padding:.25em .5em }
+[hidden] { display:none !important }
