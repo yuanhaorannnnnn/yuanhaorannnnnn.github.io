@@ -11,3 +11,5 @@
 .missing-cover{aspect-ratio:3/2;display:grid;place-content:center;color:#b1bcb2;background:#242a26;text-align:center;line-height:1.8;font-size:13px}
 
 .favorite{display:grid;place-items:center;width:44px;height:44px;padding:10px;border:0;color:#c5d1c4;background:transparent;cursor:pointer}.favorite svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.favorite[aria-pressed=true]{background:transparent;color:#c6d9bd}.favorite[aria-pressed=true] svg{fill:currentColor}.favorite:focus-visible{outline:2px solid #d1e1cb;outline-offset:2px}
+
+.intro .copyright,.issue-copyright{color:#b1bcb2;font-size:13px;line-height:1.8}.intro .copyright{margin-top:14px}.issue-copyright{max-width:720px;margin:20px 0}
