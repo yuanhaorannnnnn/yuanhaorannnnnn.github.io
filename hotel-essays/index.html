@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>酒店 · Xianning</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site"><nav class="shell" aria-label="网站导航"><a class="brand" href="/">Xianning</a><a href="/collections/">返回收藏</a></nav></header>
+<main>
+  <div class="mint">
+    <section class="cover shell" aria-labelledby="topic-title">
+      <div class="summary">
+        <div class="origin">DDDeanna · 微信公众号合集</div>
+        <h1 id="topic-title">酒店</h1>
+        <p>从戛纳的窗边出发，读八篇关于住店、旅行与停留的随笔。</p>
+        <a class="album" href="https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI4NTA2MTQ3Mw%3D%3D&amp;action=getalbum&amp;album_id=1337209100270223362" rel="noreferrer">查看微信合集 ↗</a>
+      </div>
+      <a class="feature" href="2648149522-1.html">
+        <img src="images/2648149522-1/img_004.jpeg" width="822" height="550" alt="从戛纳酒店的拱窗看出去，远处是海面与地平线">
+        <span>浮生半日：在戛纳度过一个自在浪漫周末</span>
+      </a>
+    </section>
+  </div>
+  <section class="directory shell" id="directory" aria-labelledby="directory-title">
+    <div class="directory-head">
+      <div><h2 id="directory-title">合集目录</h2></div>
+      <label for="search">搜索标题或期号<input id="search" type="search" placeholder="例如：戛纳、05"></label>
+    </div>
+    <output id="matches" for="search" aria-live="polite"></output>
+    <ol>
+<li data-title="人生中第一次拥有自己的10亿，会发生在什么时候？" data-number="8"><span class="number">08</span><a href="/middle-age/2648152831-1.html">人生中第一次拥有自己的10亿，会发生在什么时候？</a><time datetime="2025-03-09">2025-03-09</time></li>
+<li data-title="酒店，这个概念对你意味着什么？" data-number="7"><span class="number">07</span><a href="2648150120-1.html">酒店，这个概念对你意味着什么？</a><time datetime="2021-01-13">2021-01-13</time></li>
+<li data-title="Unfading Elegance" data-number="6"><span class="number">06</span><a href="2648150522-1.html">Unfading Elegance</a><time datetime="2023-06-11">2023-06-11</time></li>
+<li data-title="浮生半日：在戛纳度过一个自在浪漫周末" data-number="5"><span class="number">05</span><a href="2648149522-1.html">浮生半日：在戛纳度过一个自在浪漫周末</a><time datetime="2020-03-30">2020-03-30</time></li>
+<li data-title="醉翁之意不在酒，还能在哪里呢？" data-number="4"><span class="number">04</span><a href="2648149932-1.html">醉翁之意不在酒，还能在哪里呢？</a><time datetime="2020-08-16">2020-08-16</time></li>
+<li data-title="世上最值得打卡的网红梦幻奇境" data-number="3"><span class="number">03</span><span>世上最值得打卡的网红梦幻奇境</span><span class="missing">待补</span></li>
+<li data-title="别让目的地成为你出发的理由" data-number="2"><span class="number">02</span><a href="2648149395-1.html">别让目的地成为你出发的理由</a><time datetime="2020-03-08">2020-03-08</time></li>
+<li data-title="送你一份《不完全酒店地图》" data-number="1"><span class="number">01</span><a href="2648149361-1.html">送你一份《不完全酒店地图》</a><time datetime="2020-02-29">2020-02-29</time></li>
+</ol>
+  </section>
+</main>
+<script>
+  const search = document.querySelector('#search');
+  const rows = [...document.querySelectorAll('ol li')];
+  search.addEventListener('input', () => {
+    const query = search.value.normalize('NFKC').trim().toLowerCase();
+    const number = /^\d+$/.test(query) ? String(Number(query)) : '';
+    let count = 0;
+    for (const row of rows) {
+      row.hidden = number ? row.dataset.number !== number : !row.dataset.title.toLowerCase().includes(query);
+      if (!row.hidden) count++;
+    }
+    document.querySelector('#matches').textContent = query ? (count ? `找到 ${count} 篇` : '没有匹配的文章') : '';
+  });
+</script>
+<footer><div class="shell">来源：微信公众号「DDDeanna」。原文及图片版权归各自权利人所有，转载授权待核实。</div></footer>
+</body>
+</html>
