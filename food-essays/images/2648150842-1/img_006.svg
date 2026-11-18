@@ -1,0 +1,16 @@
+  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 91.82 70.95" style="enable-background:new 0 0 91.82 70.95;" xml:space="preserve">
+   <g>
+    <g>
+     <circle cx="22.44" cy="48.52" r="22.44">
+     </circle>
+     <line style="fill:none;stroke:#000000;stroke-width:1.9081;stroke-linecap:round;stroke-miterlimit:10;" x1="39.93" y1="0.95" x2="6.23" y2="34.65">
+     </line>
+    </g>
+    <g>
+     <circle cx="69.39" cy="48.52" r="22.44">
+     </circle>
+     <line style="fill:none;stroke:#000000;stroke-width:1.9081;stroke-linecap:round;stroke-miterlimit:10;" x1="86.88" y1="0.95" x2="53.18" y2="34.65">
+     </line>
+    </g>
+   </g>
+  </svg>
