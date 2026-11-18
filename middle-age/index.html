@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>中年 · Xianning</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="site"><nav class="shell"><a class="brand" href="/">Xianning</a><a href="/collections/">返回收藏</a></nav></header>
+<main>
+<div class="night">
+<section class="hero shell" aria-labelledby="main-title">
+  <div class="cover-copy">
+    <div class="author">DDDeanna · 微信公众号合集</div>
+    <h1 id="main-title">中年<span>.</span></h1>
+    <p class="subtitle">从展览、酒局和家常事，写工作、关系与自由。</p>
+    <a class="lead" href="2648153127-1.html"><span>精选随笔</span><strong>在Prada遇到“镜中我”：亲密关系从来不是找一个完美的人</strong><span class="cta">站内阅读 ↗</span></a>
+  </div>
+  <a href="2648153127-1.html" class="cover-image" aria-label="阅读 在Prada遇到“镜中我”：亲密关系从来不是找一个完美的人"><img src="images/2648153127-1/img_003.jpeg" alt="木地板展厅里，金黄色展墙陈列一幅黑色作品"></a>
+</section>
+</div>
+<section class="directory shell" id="directory" aria-labelledby="directory-title">
+  <div class="directory-header">
+    <div><h2 id="directory-title">九篇随笔</h2><p>按原合集顺序。</p></div>
+    <label for="search">搜索标题<input type="search" id="search" placeholder="输入标题关键词"></label>
+  </div>
+  <output id="matches" for="search" aria-live="polite"></output>
+  <ol>
+<li data-title="成年人找回自由最好的办法，从来不是辞职"><span class="number">09</span><a href="2648154438-1.html">成年人找回自由最好的办法，从来不是辞职<span aria-hidden="true"> ↗</span></a><time datetime="2026-07-12">2026-07-12</time></li>
+<li data-title="在Prada遇到“镜中我”：亲密关系从来不是找一个完美的人"><span class="number">08</span><a href="2648153127-1.html">在Prada遇到“镜中我”：亲密关系从来不是找一个完美的人<span aria-hidden="true"> ↗</span></a><time datetime="2025-06-15">2025-06-15</time></li>
+<li data-title="人生中第一次拥有自己的10亿，会发生在什么时候？"><span class="number">07</span><a href="2648152831-1.html">人生中第一次拥有自己的10亿，会发生在什么时候？<span aria-hidden="true"> ↗</span></a><time datetime="2025-03-09">2025-03-09</time></li>
+<li data-title="所以，人们追求的快乐到底是什么？"><span class="number">06</span><a href="2648151809-1.html">所以，人们追求的快乐到底是什么？<span aria-hidden="true"> ↗</span></a><time datetime="2024-04-22">2024-04-22</time></li>
+<li data-title="上海降温雨夜的中年酒局"><span class="number">05</span><a href="2648150902-1.html">上海降温雨夜的中年酒局<span aria-hidden="true"> ↗</span></a><time datetime="2023-11-10">2023-11-10</time></li>
+<li data-title="中年人酒局及股市生存手册"><span class="number">04</span><a href="2648149880-1.html">中年人酒局及股市生存手册<span aria-hidden="true"> ↗</span></a><time datetime="2020-08-02">2020-08-02</time></li>
+<li data-title="3300点后的新老股民跑路指南"><span class="number">03</span><a href="2648149857-1.html">3300点后的新老股民跑路指南<span aria-hidden="true"> ↗</span></a><time datetime="2020-07-16">2020-07-16</time></li>
+<li data-title="如何过上别人羡慕的生活？"><span class="number">02</span><a href="2648150462-1.html">如何过上别人羡慕的生活？<span aria-hidden="true"> ↗</span></a><time datetime="2022-08-08">2022-08-08</time></li>
+<li data-title="愿你渐渐靠近自己向往的生活"><span class="number">01</span><a href="2648150476-1.html">愿你渐渐靠近自己向往的生活<span aria-hidden="true"> ↗</span></a><time datetime="2023-01-30">2023-01-30</time></li>
+</ol>
+  <a class="external" href="https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzI4NTA2MTQ3Mw%3D%3D&amp;action=getalbum&amp;album_id=3414099786784538625" rel="noreferrer">查看微信合集 ↗</a>
+</section>
+</main>
+<script>
+  const search = document.querySelector('#search');
+  const items = [...document.querySelectorAll('ol li')];
+  const status = document.querySelector('#matches');
+  search.addEventListener('input', () => {
+    const query = search.value.trim().normalize('NFKC').toLowerCase();
+    let count = 0;
+    for (const item of items) {
+      item.hidden = !item.dataset.title.normalize('NFKC').toLowerCase().includes(query);
+      if (!item.hidden) count++;
+    }
+    status.textContent = query ? (count ? `找到 ${count} 篇` : '没有匹配的文章') : '';
+  });
+</script>
+<footer><div class="shell">来源：微信公众号「DDDeanna」。原文及图片版权归各自权利人所有，转载授权待核实。</div></footer>
+</body>
+</html>
