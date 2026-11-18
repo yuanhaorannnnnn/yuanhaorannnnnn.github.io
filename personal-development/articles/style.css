@@ -1,0 +1,33 @@
+:root {
+  color-scheme: light;
+  --paper: #fff9e9;
+  --ink: #211d24;
+  --muted: #5d5557;
+  --rule: #c8bfb0;
+  --accent: #a3302d;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 16px/1.65 system-ui, "Noto Sans CJK SC", sans-serif; }
+a { color: inherit; text-underline-offset: .26em; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+header { background: white; border-bottom: 1px solid var(--rule); }
+.shell { width: min(1080px, calc(100% - 64px)); margin-inline: auto; }
+nav { min-height: 65px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+nav a { text-decoration: none; }
+.brand { font: 22px Georgia, serif; }
+main { width: min(760px, calc(100% - 64px)); margin: 46px auto 60px; }
+h1 { font-family: "Noto Serif CJK SC", "Songti SC", SimSun, serif; font-size: clamp(28px, 5.4vw, 48px); line-height: 1.3; margin: 9px 0 15px; overflow-wrap: anywhere; }
+.meta { display: flex; flex-wrap: wrap; gap: 3px 14px; color: var(--muted); font-size: 14px; }
+.pay { color: var(--accent); }
+figure { margin: 24px 0 0; }
+figure img { display: block; max-width: 100%; width: 420px; height: auto; border: 1px solid var(--ink); }
+figcaption { color: var(--muted); font-size: 13px; margin-top: 5px; }
+.source { margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--rule); }
+.source a { display: inline-block; background: #f5ec55; padding: 7px 11px; font-weight: 650; text-decoration: none; }
+.source a:hover { text-decoration: underline; }
+footer { border-top: 1px solid var(--rule); padding: 18px 0 26px; color: var(--muted); font-size: 13px; }
+@media (max-width: 680px) {
+  .shell, main { width: calc(100% - 36px); }
+  nav { min-height: 56px; }
+  main { margin-block: 34px 43px; }
+}
