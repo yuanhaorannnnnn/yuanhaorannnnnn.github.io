@@ -4,7 +4,7 @@ import json
 import subprocess
 import sys
 from pathlib import Path
-SKILL=Path('/home/yhr/.agents/repos/agent-skills/skills/acquisition/scripts')
+SKILL=Path.home() / '.agents' / 'repos' / 'agent-skills' / 'skills' / 'acquisition' / 'scripts'
 sys.path.insert(0,str(SKILL))
 from discover_wechat_album import installed_cli_python, compile_manifest, apply_selection
 URL='https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzIxMjE0Mjg2MQ==&action=getalbum&album_id=2441265493677359105&scene=126&sessionid=#wechat_redirect'

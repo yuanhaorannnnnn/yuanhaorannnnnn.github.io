@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
 """Render the author's quick notes into the site; never modify source notes."""
 import argparse
+import os
 import html
 import hashlib
 import json
 import re
 from pathlib import Path
+
+_DSH_ROOT = os.environ.get("DSH_DATA_ROOT") or os.path.join("/media", os.environ.get("USER", ""), "2T")
 import markdown
 import bleach
 
 SITE = Path(__file__).resolve().parent.parent
-SOURCE = Path('/media/yhr/2T/files/notes/self/随手记')
+SOURCE = Path(_DSH_ROOT) / 'files' / 'notes' / 'self' / '随手记'
 START = '<!-- quick-notes:start -->'
 END = '<!-- quick-notes:end -->'
 MARK = '<!-- generated:quick-note -->'

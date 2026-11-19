@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Capture missing public album items from a verified discovery manifest."""
 import argparse
+import os
 import concurrent.futures
 import json
 import re
@@ -8,15 +9,17 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+
+_DSH_ROOT = os.environ.get("DSH_DATA_ROOT") or os.path.join("/media", os.environ.get("USER", ""), "2T")
 from PIL import Image
 
-SKILL = Path('/home/yhr/.agents/repos/agent-skills/skills/acquisition/scripts')
+SKILL = Path.home() / '.agents' / 'repos' / 'agent-skills' / 'skills' / 'acquisition' / 'scripts'
 sys.path.insert(0, str(SKILL))
 from ingest_wechat_article import run_cli_in_staging, single_markdown_file, parse_cli_markdown
 from discover_wechat_album import article_identity
 
 ROOT = Path(__file__).resolve().parents[1] / 'collection'
-STAGING = Path('/media/yhr/2T/agent-workspaces/jiyi-sync')
+STAGING = Path(_DSH_ROOT) / 'agent-workspaces' / 'jiyi-sync'
 
 def capture(item):
     number = item['article_number']; url = item['url']; staging = STAGING / str(number)
