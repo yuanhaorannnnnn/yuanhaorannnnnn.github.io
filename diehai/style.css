@@ -30,6 +30,17 @@ p { margin: 0 0 1.1em; }
 .entry { display: grid; grid-template-columns: 3.5rem minmax(0, 1fr) auto; gap: 13px; padding: 13px 0; border-top: 1px solid var(--line); align-items: baseline; }
 .entry a { font-weight: 600; }
 .entry time { white-space: nowrap; }
+.entry[id^="episode-"] {
+  grid-template-columns: 3.5rem minmax(0, 1fr) auto auto;
+  padding-inline: 10px;
+  scroll-margin-top: 24px;
+}
+.entry[id^="episode-"] > .collection-copy {
+  grid-column:auto;
+  min-width:5.8em;
+  border-color:var(--line);
+}
+.entry[id^="episode-"] > .collection-copy:hover {border-color:var(--accent)}
 article { padding-top: 28px; }
 article h1 { font-size: clamp(2rem,4.1vw,4.3rem); max-width: 20em; margin-top: 20px; }
 .reader { max-width: 740px; margin: 34px auto 0; overflow-wrap: anywhere; }
@@ -51,4 +62,7 @@ footer { margin-top: 54px; padding: 18px 0 36px; border-top: 1px solid var(--ink
   .mast { grid-template-columns: 1fr; gap: 5px; padding-top: 34px; }
   .entry { grid-template-columns: 2rem minmax(0, 1fr); gap: 3px 8px; }
   .entry time { grid-column: 2; }
+  .entry[id^="episode-"] { grid-template-columns: 2rem minmax(0, 1fr) auto; }
+  .entry[id^="episode-"] > a { grid-column: 2 / -1; }
+  .entry[id^="episode-"] > .collection-copy { grid-column: 3; }
 }

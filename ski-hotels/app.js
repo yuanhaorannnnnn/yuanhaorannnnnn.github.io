@@ -83,7 +83,14 @@ function renderSearch() {
     const link = document.createElement('a');
     link.href = image ? photoLink(issue, index) : issue.id + '.html';
     link.textContent = image ? issue.title + ' · ' + image.caption : issue.title;
-    row.append(link);
+    const copy = document.createElement('button');
+    copy.type = 'button';
+    copy.className = 'collection-copy';
+    copy.dataset.collectionCopy = image ? link.href : './#item-' + issue.id;
+    copy.setAttribute('aria-label', '复制链接：' + link.textContent);
+    copy.textContent = '复制链接';
+    row.classList.add('collection-share-row');
+    row.append(link, copy);
     results.append(row);
   }
   if (!matches.length) results.textContent = '没有找到匹配的标题或图注。';

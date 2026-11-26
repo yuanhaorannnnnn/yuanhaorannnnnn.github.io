@@ -33,8 +33,11 @@ function pagesNav(result, query) {
   const nextLink = result.page < result.pages ? `<a href="#${esc(listRoute(query,result.page+1))}">下一页</a>` : '<span class="page-disabled">下一页</span>';
   return `<nav class="pagination" aria-label="分页">${previousLink}<span class="page-numbers">${numbers}</span>${nextLink}<span class="page-total">${result.page} / ${result.pages}</span></nav>`;
 }
+function copyIssue(issue, index = -1) {
+  return `<button type="button" class="collection-copy" data-collection-copy="#${esc(issueRoute(issue,index))}" aria-label="复制链接：第 ${issue.id} 期${index < 0 ? '' : '第 '+(index+1)+' 张图片'}">复制链接</button>`;
+}
 function issueCard(issue, from) {
-  return `<a class="issue" href="#${esc(issueRoute(issue,-1,from))}">${issue.images.length ? `<img src="${esc(issue.images[0].path)}" loading="lazy" alt="">` : `<span class="missing-cover">NO. ${issue.id}<br>暂未取得</span>`}<div><div class="eyebrow">NO. ${issue.id}${issue.date ? `　 /　${esc(issue.date)}` : ''}</div><h3>${esc(issue.title)}</h3><p>${issue.images.length ? `${issue.images.length} 张图片` : '内容暂缺 · 查看原文'}</p></div></a>`;
+  return `<div class="collection-share-pair"><a class="issue" href="#${esc(issueRoute(issue,-1,from))}">${issue.images.length ? `<img src="${esc(issue.images[0].path)}" loading="lazy" alt="">` : `<span class="missing-cover">NO. ${issue.id}<br>暂未取得</span>`}<div><div class="eyebrow">NO. ${issue.id}${issue.date ? `　 /　${esc(issue.date)}` : ''}</div><h3>${esc(issue.title)}</h3><p>${issue.images.length ? `${issue.images.length} 张图片` : '内容暂缺 · 查看原文'}</p></div></a>${copyIssue(issue)}</div>`;
 }
 function searchCard(hit, query, from) {
   const {issue, image, index} = hit;
@@ -44,7 +47,7 @@ function searchCard(hit, query, from) {
     const start = Math.max(0, offset - 35);
     excerpt = `${start ? '…' : ''}${image.caption.slice(start,start+130)}${start+130 < image.caption.length ? '…' : ''}`;
   }
-  return `<a class="issue search-result" href="#${esc(issueRoute(issue,index,from))}">${image ? `<img src="${esc(image.path)}" loading="lazy" alt="">` : issue.images.length ? `<img src="${esc(issue.images[0].path)}" loading="lazy" alt="">` : `<span class="missing-cover">NO. ${issue.id}<br>暂未取得</span>`}<div><div class="eyebrow">NO. ${issue.id}${issue.date ? `　 /　${esc(issue.date)}` : ''}　 /　${image ? `第 ${index+1} 张` : '标题匹配'}</div><h3>${esc(issue.title)}</h3><p>${image ? esc(excerpt) : issue.images.length ? '查看本期' : '内容暂缺 · 查看原文'}</p></div></a>`;
+  return `<div class="collection-share-pair"><a class="issue search-result" href="#${esc(issueRoute(issue,index,from))}">${image ? `<img src="${esc(image.path)}" loading="lazy" alt="">` : issue.images.length ? `<img src="${esc(issue.images[0].path)}" loading="lazy" alt="">` : `<span class="missing-cover">NO. ${issue.id}<br>暂未取得</span>`}<div><div class="eyebrow">NO. ${issue.id}${issue.date ? `　 /　${esc(issue.date)}` : ''}　 /　${image ? `第 ${index+1} 张` : '标题匹配'}</div><h3>${esc(issue.title)}</h3><p>${image ? esc(excerpt) : issue.images.length ? '查看本期' : '内容暂缺 · 查看原文'}</p></div></a>${copyIssue(issue,index)}</div>`;
 }
 function render() {
   document.querySelector('#count').textContent = favorites.length ? `(${favorites.length})` : '';
@@ -61,8 +64,8 @@ function render() {
     const safeOrigin = origin === '/' || origin.startsWith('/?') ? origin : '/';
     const back = `<a class="back" href="#${esc(safeOrigin)}">← ${safeOrigin.includes('q=') ? '返回搜索结果' : '返回期数列表'}</a>`;
     if (!issue) { app.innerHTML = `${back}<p>未找到这一期。</p>`; return; }
-    if (!issue.images.length) { app.innerHTML = `${back}<h1 class="issue-title">${titleHtml(issue.title)}</h1><p class="subtle">本期暂未取得内容，可查看公众号原文。</p><a class="source" href="${esc(issue.url)}" target="_blank" rel="noopener">查看公众号原文 ↗</a>`; return; }
-    app.innerHTML = `${back}<h1 class="issue-title">${titleHtml(issue.title)}</h1><p class="subtle">NO. ${issue.id}　 /　${esc(issue.date)}　 /　${issue.images.length} 张图片</p><p class="copyright issue-copyright">本图集转载自公众号「hawk26讲武堂」。文章文字及编辑内容的权利归相应权利人所有，照片版权归原摄影师或其他权利人所有。本站不对上述内容主张版权。</p><a class="source" href="${esc(issue.url)}" target="_blank" rel="noopener">公众号原文 ↗</a><div class="photo-grid">${issue.images.map((image,i) => photo(issue,image,i)).join('')}</div>`;
+    if (!issue.images.length) { app.innerHTML = `${back}<h1 class="issue-title">${titleHtml(issue.title)}</h1>${copyIssue(issue)}<p class="subtle">本期暂未取得内容，可查看公众号原文。</p><a class="source" href="${esc(issue.url)}" target="_blank" rel="noopener">查看公众号原文 ↗</a>`; return; }
+    app.innerHTML = `${back}<h1 class="issue-title">${titleHtml(issue.title)}</h1>${copyIssue(issue)}<p class="subtle">NO. ${issue.id}　 /　${esc(issue.date)}　 /　${issue.images.length} 张图片</p><p class="copyright issue-copyright">本图集转载自公众号「hawk26讲武堂」。文章文字及编辑内容的权利归相应权利人所有，照片版权归原摄影师或其他权利人所有。本站不对上述内容主张版权。</p><a class="source" href="${esc(issue.url)}" target="_blank" rel="noopener">公众号原文 ↗</a><div class="photo-grid">${issue.images.map((image,i) => photo(issue,image,i)).join('')}</div>`;
     const number = segments[3] === 'photo' ? Number(segments[4]) : 0;
     const target = Number.isSafeInteger(number) && number > 0 ? document.getElementById(`photo-${number}`) : null;
     if (target) {
@@ -90,7 +93,7 @@ function render() {
     } else {
       const featured = result.page === 1 ? result.items[0] : null;
       const rest = featured ? result.items.slice(1) : result.items;
-      const hero = featured ? `<div class="section-label"><span>最新一期</span><span>${esc(featured.date)}　 /　 NO. ${featured.id}</span></div><div class="hero"><a href="#${esc(issueRoute(featured,-1,from))}">${featured.images.length ? `<img src="${esc(featured.images[3]?.path || featured.images[0].path)}" alt="第 ${featured.id} 期代表图">` : `<span class="missing-cover">NO. ${featured.id}<br>暂未取得</span>`}</a><div><div class="eyebrow">ISSUE ${featured.id}　 /　${featured.images.length ? `${featured.images.length} 张图片` : '内容暂缺'}</div><h2>${esc(featured.title)}</h2><a class="button" href="#${esc(issueRoute(featured,-1,from))}">查看本期 ↗</a></div></div>` : '';
+      const hero = featured ? `<div class="section-label"><span>最新一期</span><span>${esc(featured.date)}　 /　 NO. ${featured.id}</span></div><div class="hero"><a href="#${esc(issueRoute(featured,-1,from))}">${featured.images.length ? `<img src="${esc(featured.images[3]?.path || featured.images[0].path)}" alt="第 ${featured.id} 期代表图">` : `<span class="missing-cover">NO. ${featured.id}<br>暂未取得</span>`}</a><div><div class="eyebrow">ISSUE ${featured.id}　 /　${featured.images.length ? `${featured.images.length} 张图片` : '内容暂缺'}</div><h2>${esc(featured.title)}</h2><a class="button" href="#${esc(issueRoute(featured,-1,from))}">查看本期 ↗</a>${copyIssue(featured)}</div></div>` : '';
       app.innerHTML = `${header}${hero}<div class="issue-list${featured ? '' : ' issue-list-first'}"><div class="section-label"><span>往期图集</span><span>共 ${issues.length} 期</span></div>${rest.map(issue => issueCard(issue,from)).join('')}${pagesNav(result,'')}</div>`;
     }
     window.scrollTo(0,0);
